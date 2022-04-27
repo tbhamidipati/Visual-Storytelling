@@ -1,10 +1,9 @@
 __author__ = 'Licheng'
-from pprint import pprint
-from tokenizer.ptbtokenizer import PTBTokenizer
-from bleu.bleu import Bleu
-from meteor.meteor import Meteor
-from rouge.rouge import Rouge
-from cider.cider import Cider
+from .tokenizer.ptbtokenizer import PTBTokenizer
+from .bleu import bleu
+from .meteor import meteor
+from .rouge import rouge
+from .cider import cider
 
 
 class AlbumEvaluator:
@@ -24,7 +23,7 @@ class AlbumEvaluator:
         # =================================================
         # Set up scorers
         # =================================================
-        print 'setting up scorers...'
+        print ('setting up scorers...')
         scorers = []
         scorers = [
             (Bleu(4), ["Bleu_1", "Bleu_2", "Bleu_3", "Bleu_4"]),
@@ -37,17 +36,17 @@ class AlbumEvaluator:
         # Compute scores
         # =================================================
         for scorer, method in scorers:
-            print 'computing %s score ...' % (scorer.method())
+            print ('computing %s score ...' % (scorer.method()))
             score, scores = scorer.compute_score(self.album_to_Gts, self.album_to_Res)
             if type(method) == list:
                 for sc, scs, m in zip(score, scores, method):
                     self.setEval(sc, m)
                     self.setAlbumToEval(scs, self.album_to_Gts.keys(), m)
-                    print '%s: %.3f' % (m, sc)
+                    print ('%s: %.3f' % (m, sc))
             else:
                 self.setEval(score, method)
                 self.setAlbumToEval(scores, self.album_to_Gts.keys(), method)
-                print '%s: %.3f' % (method, score)
+                print ('%s: %.3f' % (method, score))
 
         self.setEvalAlbums()
 

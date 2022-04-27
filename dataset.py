@@ -3,11 +3,11 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
+from importlib import reload
 import sys
 
 reload(sys)
-sys.setdefaultencoding('utf8')
+
 import json
 import h5py
 import os
@@ -89,7 +89,7 @@ class VISTDataset(Dataset):
         # write reference files for captioning
         for split in ['val', 'test']:
             reference = {}
-            for flickr_id, story in self.story_line['image2caption_original'][split].iteritems():
+            for flickr_id, story in self.story_line['image2caption_original'][split].items():
                 reference[flickr_id] = story
             with open(os.path.join(ref_dir, '{}_desc_reference.json'.format(split)), 'w') as f:
                 json.dump(reference, f)

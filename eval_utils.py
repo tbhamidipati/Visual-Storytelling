@@ -3,11 +3,10 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
+from importlib import reload
 import sys
 
 reload(sys)
-sys.setdefaultencoding('utf8')
 
 import os
 import json
